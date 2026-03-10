@@ -1,0 +1,470 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Double Click | Coming Soon</title>
+    <link rel="icon" type="image/png" href="favicon.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --color-primary: #4245e0;
+        --color-primary-hover: #5a5eff;
+        --color-bg-dark: #0a0d1f;
+        --color-bg-secondary: #121633;
+        --color-text-primary: #ffffff;
+        --color-text-secondary: #b7bce8;
+        --color-text-muted: #c6cbf5;
+        --color-card-border: rgba(66, 69, 224, 0.15);
+        --font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      }
+
+      *,
+      *::before,
+      *::after {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      html {
+        scroll-behavior: smooth;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+      }
+
+      body {
+        font-family: var(--font-family);
+        background: var(--color-bg-dark);
+        color: var(--color-text-primary);
+        line-height: 1.6;
+        overflow-x: hidden;
+      }
+
+      ::selection {
+        background: var(--color-primary);
+        color: var(--color-text-primary);
+      }
+
+      .hero {
+        position: relative;
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: var(--color-bg-dark);
+        overflow: hidden;
+        padding: 6rem 2rem 4rem;
+      }
+
+      .hero-bg-glow {
+        position: absolute;
+        top: -20%;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 800px;
+        height: 800px;
+        background: radial-gradient(
+          circle,
+          rgba(66, 69, 224, 0.12) 0%,
+          rgba(66, 69, 224, 0.04) 40%,
+          transparent 70%
+        );
+        pointer-events: none;
+        z-index: 0;
+      }
+
+      .section-container {
+        position: relative;
+        z-index: 1;
+        width: 100%;
+        max-width: 960px;
+        margin: 0 auto;
+        text-align: center;
+      }
+
+      .hero .section-container {
+        max-width: 860px;
+      }
+
+      .reveal .reveal-item {
+        opacity: 0;
+        transform: translateY(28px);
+        transition:
+          opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+          transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+
+      .reveal.is-visible .reveal-item {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      .reveal.is-visible .delay-1 {
+        transition-delay: 0.15s;
+      }
+
+      .reveal.is-visible .delay-2 {
+        transition-delay: 0.3s;
+      }
+
+      .reveal.is-visible .delay-3 {
+        transition-delay: 0.45s;
+      }
+
+      .logo-wrapper {
+        margin-bottom: 2.5rem;
+      }
+
+      .logo {
+        height: 72px;
+        width: auto;
+        object-fit: contain;
+        filter: drop-shadow(0 0 40px rgba(66, 69, 224, 0.15));
+        transition: filter 0.4s ease;
+      }
+
+      .logo:hover {
+        filter: drop-shadow(0 0 60px rgba(66, 69, 224, 0.25));
+      }
+
+      .headline {
+        font-size: clamp(2.2rem, 5vw, 3.8rem);
+        font-weight: 800;
+        line-height: 1.1;
+        letter-spacing: -0.03em;
+        margin-bottom: 1.5rem;
+      }
+
+      .headline-accent {
+        color: var(--color-primary);
+      }
+
+      .subtext,
+      .subtitle {
+        font-size: clamp(1rem, 2vw, 1.2rem);
+        font-weight: 400;
+        line-height: 1.7;
+        color: var(--color-text-secondary);
+      }
+
+      .subtext {
+        max-width: 600px;
+        margin: 0 auto 2.5rem;
+      }
+
+      .desktop-break {
+        display: none;
+      }
+
+      .divider {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 12px;
+      }
+
+      .dot {
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: var(--color-primary);
+        opacity: 0.5;
+      }
+
+      .line {
+        width: 48px;
+        height: 2px;
+        background: linear-gradient(90deg, var(--color-primary), rgba(66, 69, 224, 0.2));
+        border-radius: 1px;
+      }
+
+      .coming-soon {
+        position: relative;
+        background: var(--color-bg-secondary);
+        padding: 6rem 2rem;
+      }
+
+      .badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        padding: 8px 20px;
+        background: rgba(66, 69, 224, 0.1);
+        border: 1px solid rgba(66, 69, 224, 0.2);
+        border-radius: 100px;
+        font-size: 0.85rem;
+        font-weight: 500;
+        color: var(--color-primary-hover);
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+        margin-bottom: 2rem;
+      }
+
+      .pulse {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: var(--color-primary);
+        animation: pulse-anim 2s ease-in-out infinite;
+      }
+
+      @keyframes pulse-anim {
+        0%,
+        100% {
+          opacity: 1;
+          box-shadow: 0 0 0 0 rgba(66, 69, 224, 0.4);
+        }
+
+        50% {
+          opacity: 0.7;
+          box-shadow: 0 0 0 6px rgba(66, 69, 224, 0);
+        }
+      }
+
+      .title {
+        font-size: clamp(2.4rem, 6vw, 4.2rem);
+        font-weight: 900;
+        letter-spacing: -0.03em;
+        line-height: 1.05;
+        margin-bottom: 1.25rem;
+      }
+
+      .subtitle {
+        max-width: 540px;
+        margin: 0 auto 3.5rem;
+      }
+
+      .cards {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1.25rem;
+      }
+
+      .card {
+        background: rgba(10, 13, 31, 0.6);
+        border: 1px solid var(--color-card-border);
+        border-radius: 16px;
+        padding: 2rem 1.5rem;
+        text-align: center;
+        transition:
+          transform 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+          border-color 0.35s ease,
+          box-shadow 0.35s ease;
+      }
+
+      .card:hover {
+        transform: translateY(-4px);
+        border-color: rgba(66, 69, 224, 0.35);
+        box-shadow: 0 8px 32px rgba(66, 69, 224, 0.08);
+      }
+
+      .card-icon {
+        width: 48px;
+        height: 48px;
+        margin: 0 auto 1.25rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: rgba(66, 69, 224, 0.1);
+        border-radius: 12px;
+        color: var(--color-primary);
+        transition: background 0.3s ease;
+      }
+
+      .card:hover .card-icon {
+        background: rgba(66, 69, 224, 0.18);
+      }
+
+      .card-title {
+        font-size: 1.05rem;
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+      }
+
+      .card-text {
+        font-size: 0.9rem;
+        color: var(--color-text-muted);
+        line-height: 1.5;
+      }
+
+      .footer {
+        background: var(--color-bg-dark);
+        border-top: 1px solid rgba(66, 69, 224, 0.08);
+        padding: 1.5rem 2rem;
+      }
+
+      .copy {
+        font-size: 0.825rem;
+        color: var(--color-text-muted);
+        opacity: 0.6;
+      }
+
+      @media (min-width: 768px) {
+        .desktop-break {
+          display: block;
+        }
+
+        .logo {
+          height: 88px;
+        }
+      }
+
+      @media (max-width: 768px) {
+        .cards {
+          grid-template-columns: 1fr;
+          gap: 1rem;
+          max-width: 400px;
+          margin: 0 auto;
+        }
+
+        .coming-soon {
+          padding: 4rem 1.5rem;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .hero {
+          padding: 5rem 1.25rem 3rem;
+        }
+
+        .coming-soon {
+          padding: 3.5rem 1.25rem;
+        }
+
+        .headline {
+          letter-spacing: -0.02em;
+        }
+
+        .logo {
+          height: 56px;
+        }
+
+        .card {
+          padding: 1.5rem 1.25rem;
+        }
+
+        .footer {
+          padding: 2rem 1.25rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <section class="hero reveal" data-threshold="0.1">
+        <div class="hero-bg-glow"></div>
+        <div class="section-container">
+          <div class="logo-wrapper reveal-item">
+            <img class="logo" src="logo-w.png" alt="Double Click" />
+          </div>
+          <h1 class="headline reveal-item delay-1">
+            We Build Software <span class="headline-accent">That Scales</span>
+          </h1>
+          <p class="subtext reveal-item delay-2">
+            Engineering modern digital products with precision, performance, and purpose.
+            <br class="desktop-break" />
+            From concept to deployment, we turn bold ideas into reliable software.
+          </p>
+          <div class="divider reveal-item delay-3">
+            <span class="dot"></span>
+            <span class="line"></span>
+            <span class="dot"></span>
+          </div>
+        </div>
+      </section>
+
+      <section class="coming-soon reveal" data-threshold="0.15">
+        <div class="section-container">
+          <div class="badge reveal-item">
+            <span class="pulse"></span>
+            In Development
+          </div>
+          <h2 class="title reveal-item delay-1">Coming Soon</h2>
+          <p class="subtitle reveal-item delay-2">
+            We're crafting something exceptional. Our full platform launches soon.
+            <br class="desktop-break" />
+            Stay tuned for what's next.
+          </p>
+          <div class="cards reveal-item delay-3">
+            <article class="card">
+              <div class="card-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="16 18 22 12 16 6"></polyline>
+                  <polyline points="8 6 2 12 8 18"></polyline>
+                </svg>
+              </div>
+              <h3 class="card-title">Custom Development</h3>
+              <p class="card-text">Scalable solutions built from the ground up</p>
+            </article>
+            <article class="card">
+              <div class="card-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+                  <line x1="8" y1="21" x2="16" y2="21"></line>
+                  <line x1="12" y1="17" x2="12" y2="21"></line>
+                </svg>
+              </div>
+              <h3 class="card-title">Modern Stack</h3>
+              <p class="card-text">Cutting-edge technologies for peak performance</p>
+            </article>
+            <article class="card">
+              <div class="card-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                </svg>
+              </div>
+              <h3 class="card-title">Secure &amp; Reliable</h3>
+              <p class="card-text">Enterprise-grade security at every layer</p>
+            </article>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div class="section-container">
+        <p class="copy">&copy; <span id="year"></span> Double Click. All rights reserved.</p>
+      </div>
+    </footer>
+
+    <script>
+      document.getElementById("year").textContent = new Date().getFullYear();
+
+      const revealSections = document.querySelectorAll(".reveal");
+
+      if ("IntersectionObserver" in window) {
+        const observers = [];
+
+        revealSections.forEach((section) => {
+          const observer = new IntersectionObserver(
+            ([entry]) => {
+              if (entry.isIntersecting) {
+                entry.target.classList.add("is-visible");
+              }
+            },
+            { threshold: Number(section.dataset.threshold || 0.1) }
+          );
+
+          observer.observe(section);
+          observers.push(observer);
+        });
+
+        window.addEventListener(
+          "beforeunload",
+          () => {
+            observers.forEach((observer) => observer.disconnect());
+          },
+          { once: true }
+        );
+      } else {
+        revealSections.forEach((section) => section.classList.add("is-visible"));
+      }
+    </script>
+  </body>
+</html>
