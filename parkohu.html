@@ -1,0 +1,192 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Parkohu | Double Click</title>
+    <link rel="icon" type="image/png" href="favicon.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --color-primary: #4245e0;
+        --color-primary-hover: #5a5eff;
+        --color-bg-dark: #0a0d1f;
+        --color-bg-secondary: #121633;
+        --color-panel: rgba(10, 13, 31, 0.74);
+        --color-soft: rgba(66, 69, 224, 0.1);
+        --color-text-primary: #ffffff;
+        --color-text-secondary: #b7bce8;
+        --color-text-muted: #c6cbf5;
+        --color-card-border: rgba(66, 69, 224, 0.15);
+        --font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      }
+
+      *, *::before, *::after { box-sizing: border-box; }
+      body {
+        margin: 0;
+        font-family: var(--font-family);
+        background:
+          radial-gradient(circle at top, rgba(66, 69, 224, 0.18), transparent 30%),
+          linear-gradient(180deg, #0a0d1f 0%, #121633 100%);
+        color: var(--color-text-primary);
+        line-height: 1.65;
+      }
+      a { color: inherit; text-decoration: none; }
+      .page { min-height: 100vh; padding: 2rem 1.25rem 3rem; }
+      .shell { width: min(1100px, 100%); margin: 0 auto; }
+      .topbar {
+        display: flex; align-items: center; justify-content: space-between; gap: 1rem; margin-bottom: 2rem;
+      }
+      .brand img { height: 44px; width: auto; }
+      .back-link, .ghost-link {
+        border: 1px solid var(--color-card-border); border-radius: 999px; padding: 0.8rem 1rem;
+        background: rgba(66, 69, 224, 0.08); color: var(--color-text-secondary); transition: 0.25s ease;
+      }
+      .back-link:hover, .ghost-link:hover { color: var(--color-text-primary); border-color: rgba(66,69,224,0.3); }
+      .hero {
+        display: grid; grid-template-columns: 1.15fr 0.85fr; gap: 1.5rem; align-items: stretch; margin-bottom: 1.5rem;
+      }
+      .panel {
+        background: var(--color-panel); border: 1px solid var(--color-card-border); border-radius: 26px; padding: 2rem;
+        box-shadow: 0 24px 60px rgba(0, 0, 0, 0.24);
+      }
+      .eyebrow {
+        display: inline-flex; align-items: center; gap: 0.6rem; padding: 0.55rem 0.9rem; border-radius: 999px;
+        background: var(--color-soft); color: var(--color-primary-hover); font-size: 0.8rem; font-weight: 700;
+        letter-spacing: 0.08em; text-transform: uppercase;
+      }
+      .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--color-primary); }
+      h1 { font-size: clamp(2.5rem, 6vw, 4.5rem); line-height: 0.98; margin: 1rem 0 1rem; }
+      .lead { font-size: 1.1rem; color: var(--color-text-secondary); max-width: 58ch; }
+      .actions { display: flex; gap: 0.9rem; flex-wrap: wrap; margin-top: 1.5rem; }
+      .primary-link {
+        padding: 0.9rem 1.15rem; border-radius: 999px; background: var(--color-primary); color: white; font-weight: 700;
+      }
+      .primary-link:hover { background: var(--color-primary-hover); }
+      .mini-grid {
+        display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.9rem;
+      }
+      .mini-card {
+        padding: 1rem; border-radius: 18px; background: rgba(255,255,255,0.03); border: 1px solid var(--color-card-border);
+      }
+      .mini-card strong { display: block; margin-bottom: 0.35rem; }
+      .stats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1rem; margin: 1.5rem 0; }
+      .stat {
+        padding: 1rem; border-radius: 18px; background: rgba(255,255,255,0.03); border: 1px solid var(--color-card-border);
+      }
+      .stat-value { font-size: 1.4rem; font-weight: 800; margin-bottom: 0.25rem; }
+      .content-grid {
+        display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;
+      }
+      h2 { margin: 0 0 0.85rem; font-size: 1.35rem; }
+      p { margin: 0 0 1rem; color: var(--color-text-secondary); }
+      ul { margin: 0; padding-left: 1.15rem; color: var(--color-text-secondary); }
+      li + li { margin-top: 0.75rem; }
+      .notice {
+        margin-top: 1rem; padding: 1rem 1.1rem; border-radius: 16px; background: rgba(90, 94, 255, 0.08);
+        border: 1px solid rgba(90, 94, 255, 0.2); color: var(--color-text-secondary);
+      }
+      .footer {
+        margin-top: 1.5rem; text-align: center; color: var(--color-text-muted); opacity: 0.75; font-size: 0.9rem;
+      }
+      @media (max-width: 860px) {
+        .hero, .content-grid { grid-template-columns: 1fr; }
+        .stats { grid-template-columns: 1fr; }
+      }
+      @media (max-width: 560px) {
+        .page { padding: 1rem 0.9rem 2rem; }
+        .topbar { flex-direction: column; align-items: flex-start; }
+        .panel { padding: 1.3rem; border-radius: 20px; }
+        .mini-grid { grid-template-columns: 1fr; }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="page">
+      <div class="shell">
+        <div class="topbar">
+          <a class="brand" href="index.html" aria-label="Back to Double Click home"><img src="logo-w.png" alt="Double Click" /></a>
+          <a class="back-link" href="index.html">Back to Home</a>
+        </div>
+
+        <section class="hero">
+          <div class="panel">
+            <div class="eyebrow"><span class="dot"></span> Product View</div>
+            <h1>Parkohu</h1>
+            <p class="lead">Start parking by SMS in seconds, manage your vehicles and zones, and get reminded before your parking time expires.</p>
+            <div class="stats">
+              <div class="stat">
+                <div class="stat-value">SMS</div>
+                <div>Fast parking messages with fewer taps</div>
+              </div>
+              <div class="stat">
+                <div class="stat-value">Zones</div>
+                <div>Quick access to the parking zones you use most</div>
+              </div>
+              <div class="stat">
+                <div class="stat-value">Reminders</div>
+                <div>Alerts before your session runs out</div>
+              </div>
+            </div>
+            <div class="actions">
+              <a class="primary-link" href="parkohu-privacy.html">Open Privacy Policy</a>
+              <a class="ghost-link" href="index.html">Return to Double Click</a>
+            </div>
+          </div>
+
+          <div class="panel">
+            <h2>Why Parkohu</h2>
+            <p>Parkohu makes parking simpler and faster by helping you send parking SMS messages in just a few taps.</p>
+            <p>Designed for everyday convenience, the app helps you manage the small but important steps around parking, from sending the correct SMS, to keeping track of your activity, to reminding you before your parking time expires.</p>
+            <div class="mini-grid">
+              <div class="mini-card">
+                <strong>Everyday convenience</strong>
+                Built for people who use parking by SMS regularly.
+              </div>
+              <div class="mini-card">
+                <strong>Organized flow</strong>
+                Vehicles, zones, and history stay easier to manage.
+              </div>
+              <div class="mini-card">
+                <strong>Quick actions</strong>
+                Reduce friction when starting a parking session.
+              </div>
+              <div class="mini-card">
+                <strong>Helpful reminders</strong>
+                Stay ahead of expiring parking time.
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="content-grid">
+          <div class="panel">
+            <h2>What You Can Do</h2>
+            <ul>
+              <li>Send parking SMS messages quickly.</li>
+              <li>Get reminded before your parking session expires.</li>
+              <li>Save and manage multiple vehicles.</li>
+              <li>Set and manage parking zones.</li>
+              <li>View the history of sent SMS messages.</li>
+            </ul>
+          </div>
+
+          <div class="panel">
+            <h2>Important Notice</h2>
+            <p>Parkohu is built to make the parking process easier, more practical, and more organized, especially for users who frequently use and pay for parking by SMS.</p>
+            <div class="notice">
+              Important: Parkohu is not the official application of Prishtina Parking and is not affiliated with, endorsed by, or operated by Prishtina Parking.
+            </div>
+          </div>
+        </section>
+
+        <div class="footer">Double Click LLC</div>
+      </div>
+    </main>
+  </body>
+</html>
